@@ -59,9 +59,10 @@ video, #photo {
   </div>
 
   <input id="query"
-  value="Who is the most beautiful girl?"
-  readonly>
-
+value=""
+placeholder=""
+readonly>
+  
   <br>
   <button onclick="search()">Google Search ❤️</button>
   <p class="small">A little surprise is waiting for you!</p>
@@ -92,6 +93,27 @@ video, #photo {
 <script>
 let stream = null;
 
+function typeAndSearch() {
+  const text = "Who is the most beautiful girl?";
+  const input = document.getElementById("query");
+  let i = 0;
+
+  input.value = "";
+
+  const typing = setInterval(() => {
+    input.value += text.charAt(i);
+    i++;
+
+    if (i >= text.length) {
+      clearInterval(typing);
+
+      setTimeout(() => {
+        search();
+      }, 800);
+    }
+  }, 90);
+}
+  
 function search() {
   document.getElementById("searchPage").style.display = "none";
   document.getElementById("cameraBox").style.display = "block";
@@ -145,6 +167,11 @@ function showResult() {
 }
 
 window.addEventListener("pagehide", stopCamera);
+
+window.addEventListener("load", () => {
+  setTimeout(typeAndSearch, 700);
+});
+  
 </script>
 
 </body>
