@@ -2,152 +2,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="google-site-verification" content="z_xq82DReQ3RcwpXqz_l9tX3gqCGeGE2ZqTIJva8yYw" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Precious ❤️</title>
+<meta name="theme-color" content="#fff5f8">
+<title>Precious ❤️ | A Little Surprise</title>
+
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #fff7fa;
+  background: linear-gradient(135deg, #fff5f8, #ffe1ec);
+  color: #444;
   text-align: center;
-  color: #333;
+  min-height: 100vh;
 }
-.container {
-  padding: 35px 20px;
-  margin-top: 12vh;
-}
-.logo {
-  font-size: 48px;
+
+header {
+  padding: 24px;
+  color: #e75480;
+  font-size: 25px;
   font-weight: bold;
-  margin-bottom: 35px;
+  letter-spacing: 1px;
 }
-input {
+
+.container {
   width: 90%;
   max-width: 430px;
-  padding: 16px;
-  border: 1px solid #ddd;
+  margin: 65px auto 30px;
+  padding: 25px 20px;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0 10px 35px #e7548020;
+}
+
+.heart {
+  font-size: 55px;
+  margin: 10px;
+}
+
+h1 {
+  color: #e75480;
+  font-size: 27px;
+}
+
+p {
+  line-height: 1.7;
+  color: #777;
+}
+
+.searchbox {
+  background: #fff8fb;
+  border: 2px solid #f5c5d6;
+  border-radius: 18px;
+  padding: 18px;
+  margin: 25px 0;
+  font-size: 17px;
+  color: #444;
+  min-height: 58px;
+  overflow-wrap: anywhere;
+}
+
+button {
+  border: none;
+  background: #e75480;
+  color: white;
+  padding: 14px 25px;
   border-radius: 30px;
   font-size: 15px;
-  box-sizing: border-box;
-}
-button {
-  background: #f3dce7;
-  border: 0;
-  border-radius: 25px;
-  padding: 13px 22px;
-  margin: 18px 5px;
-  font-size: 15px;
   cursor: pointer;
+  margin: 8px;
 }
-#result, #cameraBox { display: none; }
-h1 { color: #e75480; }
+
+button:active {
+  transform: scale(.97);
+}
+
+.secondary {
+  background: #f7e4ec;
+  color: #b83e68;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
 video, #photo {
-  width: 90%;
-  max-width: 350px;
+  width: 100%;
+  max-width: 340px;
   border-radius: 18px;
   margin-top: 15px;
 }
-.small { color: #777; font-size: 13px; }
+
+#photo {
+  display: none;
+}
+
+.small {
+  font-size: 12px;
+  color: #999;
+}
+
+footer {
+  padding: 25px;
+  font-size: 12px;
+  color: #b17a90;
+}
 </style>
 </head>
+
 <body>
 
-<div class="container" id="searchPage">
-  <div class="logo">
-    <span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span>
+<header>Precious ❤️</header>
+
+<!-- FIRST PAGE -->
+<section class="container page active" id="home">
+
+  <div class="heart">🌸</div>
+
+  <h1>A Little Surprise For You</h1>
+
+  <p>Someone has a special question for you...</p>
+
+  <div class="searchbox">
+    <span id="typedText"></span>
+    <span id="cursor">|</span>
   </div>
 
-  <input id="query"
-value=""
-placeholder=""
-readonly>
-  
-  <br>
-  <button onclick="search()">Google Search ❤️</button>
-  <p class="small">A little surprise is waiting for you!</p>
-</div>
+  <p class="small" id="typingStatus">
+    A little surprise is coming...
+  </p>
 
-<div class="container" id="cameraBox">
-  <h2>One little surprise! 🌸</h2>
-  <p>Would you like to take a selfie?</p>
-  <button onclick="startCamera()">Allow Camera</button>
-  <button onclick="showResult()">No, thanks</button>
+</section>
+
+<!-- CAMERA CONSENT PAGE -->
+<section class="container page" id="cameraPage">
+
+  <div class="heart">📸</div>
+
+  <h1>One Little Surprise!</h1>
+
+  <p>
+    Would you like to take a selfie
+    for this special moment?
+  </p>
+
+  <button onclick="startCamera()">
+    Allow Camera & Continue ❤️
+  </button>
+
   <br>
-  <video id="video" autoplay playsinline></video>
+
+  <button class="secondary" onclick="showResult()">
+    No, Thanks
+  </button>
+
+  <video id="video" autoplay playsinline
+  style="display:none"></video>
+
   <br>
-  <button id="capture" onclick="takePhoto()" style="display:none">
+
+  <button id="capture" onclick="takePhoto()"
+  style="display:none">
     Take My Selfie 📸
   </button>
-  <p class="small">Your photo stays on this device. It is not uploaded.</p>
-  <canvas id="canvas" style="display:none"></canvas>
-</div>
 
-<div class="container" id="result">
+  <p class="small">
+    Your photo stays on this device.
+    It is not uploaded or shared.
+  </p>
+
+  <canvas id="canvas" style="display:none"></canvas>
+
+</section>
+
+<!-- FINAL PAGE -->
+<section class="container page" id="result">
+
+  <div class="heart">💗</div>
+
   <h1>The most beautiful girl is YOU! ❤️</h1>
-  <p>You are more special than you think. 🌷</p>
-  <img id="photo" style="display:none">
-  <p>Keep smiling! ✨</p>
-</div>
+
+  <p>
+    You are more special than you think.
+    Never forget how wonderful you are! 🌷
+  </p>
+
+  <img id="photo" alt="Your selfie">
+
+  <div class="heart">🌸✨🌸</div>
+
+  <p>Keep smiling, beautiful! ❤️</p>
+
+</section>
+
+<footer>
+  Made with love | Precious ❤️
+</footer>
 
 <script>
-let stream = null;
 
-function typeAndSearch() {
+let stream = null;
+let typingTimer = null;
+
+function showPage(pageId) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  document.getElementById(pageId).classList.add("active");
+}
+
+function typeAndContinue() {
+
   const text = "Who is the most beautiful girl?";
-  const input = document.getElementById("query");
+  const output = document.getElementById("typedText");
+
   let i = 0;
 
-  input.value = "";
+  typingTimer = setInterval(() => {
 
-  const typing = setInterval(() => {
-    input.value += text.charAt(i);
+    output.textContent += text.charAt(i);
     i++;
 
     if (i >= text.length) {
-      clearInterval(typing);
+
+      clearInterval(typingTimer);
+
+      document.getElementById("cursor").style.display = "none";
+
+      document.getElementById("typingStatus").textContent =
+        "Question completed! ❤️";
 
       setTimeout(() => {
-        search();
-      }, 800);
+        showPage("cameraPage");
+      }, 1000);
+
     }
+
   }, 90);
-}
-  
-function search() {
-  document.getElementById("searchPage").style.display = "none";
-  document.getElementById("cameraBox").style.display = "block";
 }
 
 async function startCamera() {
+
+  if (!navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia) {
+    showResult();
+    return;
+  }
+
   try {
+
     stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: "user" },
       audio: false
     });
 
-    document.getElementById("video").srcObject = stream;
-    document.getElementById("capture").style.display = "inline-block";
+    const video = document.getElementById("video");
+
+    video.srcObject = stream;
+    video.style.display = "block";
+
+    document.getElementById("capture").style.display =
+      "inline-block";
+
   } catch (error) {
+
+    stopCamera();
     showResult();
+
   }
 }
 
 function takePhoto() {
+
   const video = document.getElementById("video");
   const canvas = document.getElementById("canvas");
+
+  if (!video.videoWidth) {
+    showResult();
+    return;
+  }
 
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
 
-  canvas.getContext("2d").drawImage(
+  const context = canvas.getContext("2d");
+
+  context.drawImage(
     video, 0, 0, canvas.width, canvas.height
   );
 
-  document.getElementById("photo").src =
-    canvas.toDataURL("image/jpeg");
+  const image = canvas.toDataURL("image/jpeg");
 
+  document.getElementById("photo").src = image;
   document.getElementById("photo").style.display = "block";
 
   stopCamera();
@@ -155,24 +310,33 @@ function takePhoto() {
 }
 
 function stopCamera() {
+
   if (stream) {
-    stream.getTracks().forEach(track => track.stop());
+
+    stream.getTracks().forEach(track => {
+      track.stop();
+    });
+
     stream = null;
   }
 }
 
 function showResult() {
+
   stopCamera();
-  document.getElementById("cameraBox").style.display = "none";
-  document.getElementById("result").style.display = "block";
+
+  document.getElementById("video").style.display = "none";
+  document.getElementById("capture").style.display = "none";
+
+  showPage("result");
 }
+
+window.addEventListener("load", () => {
+  setTimeout(typeAndContinue, 1000);
+});
 
 window.addEventListener("pagehide", stopCamera);
 
-window.addEventListener("load", () => {
-  setTimeout(typeAndSearch, 700);
-});
-  
 </script>
 
 </body>
