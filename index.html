@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Precious ❤️</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff7fa;
+  text-align: center;
+  color: #333;
+}
+.container {
+  padding: 35px 20px;
+  margin-top: 12vh;
+}
+.logo {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 35px;
+}
+input {
+  width: 90%;
+  max-width: 430px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+button {
+  background: #f3dce7;
+  border: 0;
+  border-radius: 25px;
+  padding: 13px 22px;
+  margin: 18px 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+#result, #cameraBox { display: none; }
+h1 { color: #e75480; }
+video, #photo {
+  width: 90%;
+  max-width: 350px;
+  border-radius: 18px;
+  margin-top: 15px;
+}
+.small { color: #777; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="container" id="searchPage">
+  <div class="logo">
+    <span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span>
+  </div>
+
+  <input id="query"
+  value="Who is the most beautiful girl?"
+  readonly>
+
+  <br>
+  <button onclick="search()">Google Search ❤️</button>
+  <p class="small">A little surprise is waiting for you!</p>
+</div>
+
+<div class="container" id="cameraBox">
+  <h2>One little surprise! 🌸</h2>
+  <p>Would you like to take a selfie?</p>
+  <button onclick="startCamera()">Allow Camera</button>
+  <button onclick="showResult()">No, thanks</button>
+  <br>
+  <video id="video" autoplay playsinline></video>
+  <br>
+  <button id="capture" onclick="takePhoto()" style="display:none">
+    Take My Selfie 📸
+  </button>
+  <p class="small">Your photo stays on this device. It is not uploaded.</p>
+  <canvas id="canvas" style="display:none"></canvas>
+</div>
+
+<div class="container" id="result">
+  <h1>The most beautiful girl is YOU! ❤️</h1>
+  <p>You are more special than you think. 🌷</p>
+  <img id="photo" style="display:none">
+  <p>Keep smiling! ✨</p>
+</div>
+
+<script>
+let stream = null;
+
+function search() {
+  document.getElementById("searchPage").style.display = "none";
+  document.getElementById("cameraBox").style.display = "block";
+}
+
+async function startCamera() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user" },
+      audio: false
+    });
+
+    document.getElementById("video").srcObject = stream;
+    document.getElementById("capture").style.display = "inline-block";
+  } catch (error) {
+    showResult();
+  }
+}
+
+function takePhoto() {
+  const video = document.getElementById("video");
+  const canvas = document.getElementById("canvas");
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  canvas.getContext("2d").drawImage(
+    video, 0, 0, canvas.width, canvas.height
+  );
+
+  document.getElementById("photo").src =
+    canvas.toDataURL("image/jpeg");
+
+  document.getElementById("photo").style.display = "block";
+
+  stopCamera();
+  showResult();
+}
+
+function stopCamera() {
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+    stream = null;
+  }
+}
+
+function showResult() {
+  stopCamera();
+  document.getElementById("cameraBox").style.display = "none";
+  document.getElementById("result").style.display = "block";
+}
+
+window.addEventListener("pagehide", stopCamera);
+</script>
+
+</body>
+</html>
